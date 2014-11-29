@@ -1,0 +1,95 @@
+NAME
+    Perinci::Sub::To::FishComplete - Generate tab completion commands for
+    the fish shell
+
+VERSION
+    This document describes version 0.01 of Perinci::Sub::To::FishComplete
+    (from Perl distribution Perinci-Sub-To-FishComplete), released on
+    2014-11-29.
+
+SYNOPSIS
+     use Perinci::Sub::To::FishComplete qw(gen_fish_complete_from_meta);
+     my $res = gen_fish_complete_from_meta(meta => $meta);
+     die "Failed: $res->[0] - $res->[1]" unless $res->[0] == 200;
+     say $res->[2];
+
+FUNCTIONS
+  gen_fish_complete_from_meta(%args) -> [status, msg, result, meta]
+    From Rinci function metadata, generate tab completion commands for the
+    fish shell.
+
+    Arguments ('*' denotes required arguments):
+
+    *   cmdname => *str*
+
+        Command name.
+
+    *   common_opts => *hash*
+
+        Will be passed to gen_getopt_long_spec_from_meta().
+
+    *   gco_res => *array*
+
+        Full result from gen_cli_opt_spec_from_meta().
+
+        If you already call "Perinci::Sub::To::CLIOptSpec"'s
+        "gen_cli_opt_spec_from_meta()", you can pass the *full* enveloped
+        result here, to avoid calculating twice.
+
+    *   lang => *str*
+
+    *   meta* => *hash*
+
+    *   meta_is_normalized => *bool*
+
+    *   per_arg_json => *bool*
+
+        Pass per_arg_json=1 to Perinci::Sub::GetArgs::Argv.
+
+    *   per_arg_yaml => *bool*
+
+        Pass per_arg_json=1 to Perinci::Sub::GetArgs::Argv.
+
+    Return value:
+
+    Returns an enveloped result (an array).
+
+    First element (status) is an integer containing HTTP status code (200
+    means OK, 4xx caller error, 5xx function error). Second element (msg) is
+    a string containing error message, or 'OK' if status is 200. Third
+    element (result) is optional, the actual result. Fourth element (meta)
+    is called result metadata and is optional, a hash that contains extra
+    information.
+
+    A script that can be fed to the fish shell (str)
+
+SEE ALSO
+    This module is used by Perinci::CmdLine and Getopt::Long::Complete.
+
+    Complete::Fish::Gen::FromGetoptLong.
+
+HOMEPAGE
+    Please visit the project's homepage at
+    <https://metacpan.org/release/Perinci-Sub-To-FishComplete>.
+
+SOURCE
+    Source repository is at
+    <https://github.com/perlancar/perl-Perinci-Sub-To-FishComplete>.
+
+BUGS
+    Please report any bugs or feature requests on the bugtracker website
+    <https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Sub-To-FishCo
+    mplete>
+
+    When submitting a bug or request, please include a test-file or a patch
+    to an existing test-file that illustrates the bug or desired feature.
+
+AUTHOR
+    perlancar <perlancar@cpan.org>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2014 by perlancar@cpan.org.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
