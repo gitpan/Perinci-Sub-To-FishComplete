@@ -21,7 +21,7 @@ my %WriteMakefileArgs = (
   "NAME" => "Perinci::Sub::To::FishComplete",
   "PREREQ_PM" => {
     "Perinci::Sub::Normalize" => 0,
-    "Perinci::Sub::To::CLIOptSpec" => 0,
+    "Perinci::Sub::To::CLIDocData" => 0,
     "Rinci" => "v1.1.70",
     "String::ShellQuote" => 0
   },
@@ -31,7 +31,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.01",
+  "VERSION" => "0.02",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -43,7 +43,7 @@ my %FallbackPrereqs = (
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
   "Perinci::Sub::Normalize" => 0,
-  "Perinci::Sub::To::CLIOptSpec" => 0,
+  "Perinci::Sub::To::CLIDocData" => 0,
   "Rinci" => "v1.1.70",
   "String::ShellQuote" => 0,
   "Test::More" => 0

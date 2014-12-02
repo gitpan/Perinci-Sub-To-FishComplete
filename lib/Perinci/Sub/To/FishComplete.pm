@@ -1,7 +1,7 @@
 package Perinci::Sub::To::FishComplete;
 
-our $DATE = '2014-11-29'; # DATE
-our $VERSION = '0.01'; # VERSION
+our $DATE = '2014-12-02'; # DATE
+our $VERSION = '0.02'; # VERSION
 
 use 5.010001;
 use strict;
@@ -36,12 +36,12 @@ _
             summary => 'Will be passed to gen_getopt_long_spec_from_meta()',
             schema  => 'hash*',
         },
-        gco_res => {
-            summary => 'Full result from gen_cli_opt_spec_from_meta()',
+        gcd_res => {
+            summary => 'Full result from gen_cli_doc_data_from_meta()',
             schema  => 'array*', # XXX envres
             description => <<'_',
 
-If you already call `Perinci::Sub::To::CLIOptSpec`'s
+If you already call `Perinci::Sub::To::CLIDocData`'s
 `gen_cli_opt_spec_from_meta()`, you can pass the _full_ enveloped result here,
 to avoid calculating twice.
 
@@ -79,16 +79,16 @@ sub gen_fish_complete_from_meta {
         require Perinci::Sub::Normalize;
         $meta = Perinci::Sub::Normalize::normalize_function_metadata($meta);
     }
-    my $gco_res = $args{gco_res} // do {
-        require Perinci::Sub::To::CLIOptSpec;
-        Perinci::Sub::To::CLIOptSpec::gen_cli_opt_spec_from_meta(
+    my $gcd_res = $args{gcd_res} // do {
+        require Perinci::Sub::To::CLIDocData;
+        Perinci::Sub::To::CLIDocData::gen_cli_doc_data_from_meta(
             meta=>$meta, meta_is_normalized=>1, common_opts=>$common_opts,
             per_arg_json => $args{per_arg_json},
             per_arg_yaml => $args{per_arg_yaml},
         );
     };
-    $gco_res->[0] == 200 or return $gco_res;
-    my $cliospec = $gco_res->[2];
+    $gcd_res->[0] == 200 or return $gcd_res;
+    my $clidocdata = $gcd_res->[2];
 
     my $cmdname = $args{cmdname};
     if (!$cmdname) {
@@ -98,8 +98,8 @@ sub gen_fish_complete_from_meta {
     my @cmds;
     my $prefix = "complete -c ".shell_quote($cmdname);
     push @cmds, "$prefix -e"; # currently does not work (fish bug)
-    for my $opt0 (sort keys %{ $cliospec->{opts} }) {
-        my $ospec = $cliospec->{opts}{$opt0};
+    for my $opt0 (sort keys %{ $clidocdata->{opts} }) {
+        my $ospec = $clidocdata->{opts}{$opt0};
         my $req_arg;
         for my $opt (split /, /, $opt0) {
             $opt =~ s/^--?//;
@@ -134,7 +134,7 @@ Perinci::Sub::To::FishComplete - Generate tab completion commands for the fish s
 
 =head1 VERSION
 
-This document describes version 0.01 of Perinci::Sub::To::FishComplete (from Perl distribution Perinci-Sub-To-FishComplete), released on 2014-11-29.
+This document describes version 0.02 of Perinci::Sub::To::FishComplete (from Perl distribution Perinci-Sub-To-FishComplete), released on 2014-12-02.
 
 =head1 SYNOPSIS
 
@@ -162,11 +162,11 @@ Command name.
 
 Will be passed to gen_getopt_long_spec_from_meta().
 
-=item * B<gco_res> => I<array>
+=item * B<gcd_res> => I<array>
 
-Full result from gen_cli_opt_spec_from_meta().
+Full result from gen_cli_doc_data_from_meta().
 
-If you already call C<Perinci::Sub::To::CLIOptSpec>'s
+If you already call C<Perinci::Sub::To::CLIDocData>'s
 C<gen_cli_opt_spec_from_meta()>, you can pass the I<full> enveloped result here,
 to avoid calculating twice.
 
@@ -201,7 +201,7 @@ A script that can be fed to the fish shell (str)
 
 =head1 SEE ALSO
 
-This module is used by L<Perinci::CmdLine> and L<Getopt::Long::Complete>.
+This module is used by L<Perinci::CmdLine>.
 
 L<Complete::Fish::Gen::FromGetoptLong>.
 

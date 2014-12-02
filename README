@@ -3,9 +3,9 @@ NAME
     the fish shell
 
 VERSION
-    This document describes version 0.01 of Perinci::Sub::To::FishComplete
+    This document describes version 0.02 of Perinci::Sub::To::FishComplete
     (from Perl distribution Perinci-Sub-To-FishComplete), released on
-    2014-11-29.
+    2014-12-02.
 
 SYNOPSIS
      use Perinci::Sub::To::FishComplete qw(gen_fish_complete_from_meta);
@@ -28,11 +28,11 @@ FUNCTIONS
 
         Will be passed to gen_getopt_long_spec_from_meta().
 
-    *   gco_res => *array*
+    *   gcd_res => *array*
 
-        Full result from gen_cli_opt_spec_from_meta().
+        Full result from gen_cli_doc_data_from_meta().
 
-        If you already call "Perinci::Sub::To::CLIOptSpec"'s
+        If you already call "Perinci::Sub::To::CLIDocData"'s
         "gen_cli_opt_spec_from_meta()", you can pass the *full* enveloped
         result here, to avoid calculating twice.
 
@@ -64,7 +64,7 @@ FUNCTIONS
     A script that can be fed to the fish shell (str)
 
 SEE ALSO
-    This module is used by Perinci::CmdLine and Getopt::Long::Complete.
+    This module is used by Perinci::CmdLine.
 
     Complete::Fish::Gen::FromGetoptLong.
 
